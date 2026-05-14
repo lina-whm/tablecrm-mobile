@@ -1,12 +1,13 @@
 const API_PROXY = '/api/tablecrm';
 
 function buildUrl(endpoint: string, token: string, params: Record<string, string> = {}) {
-  const url = new URL(`${API_PROXY}/${endpoint}`, window.location.origin);
-  url.searchParams.set('token', token);
+  const searchParams = new URLSearchParams();
+  searchParams.set('endpoint', endpoint);
+  searchParams.set('token', token);
   Object.entries(params).forEach(([key, value]) => {
-    url.searchParams.set(key, value);
+    searchParams.set(key, value);
   });
-  return url.toString();
+  return `${API_PROXY}?${searchParams.toString()}`;
 }
 
 export async function fetchContragents(token: string, phone: string) {
@@ -54,7 +55,11 @@ export async function fetchNomenclature(token: string, search: string = '') {
 }
 
 export async function createSale(token: string, payload: unknown, isPass: boolean) {
-  const url = `${window.location.origin}${API_PROXY}/docs_sales/?token=${token}${isPass ? '&pass=1' : ''}`;
+  const searchParams = new URLSearchParams();
+  searchParams.set('endpoint', 'docs_sales/');
+  searchParams.set('token', token);
+  if (isPass) searchParams.set('pass', '1');
+  const url = `${API_PROXY}?${searchParams.toString()}`;
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
