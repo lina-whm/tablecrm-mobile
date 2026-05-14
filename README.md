@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TableCRM Mobile Order
 
-## Getting Started
+Мобильная форма оформления заказа для tablecrm.com.
 
-First, run the development server:
+## Стек
+
+- **Next.js** - фреймворк
+- **shadcn/ui** - UI компоненты
+- **TypeScript** - типизация
+
+## Запуск локально
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Деплой на Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+vercel --prod
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Переменные окружения
 
-## Learn More
+Не требуются. Токен вводится пользователем в интерфейсе.
 
-To learn more about Next.js, take a look at the following resources:
+## API Endpoints
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Приложение использует API tablecrm.com:
+- `/api/proxy` - прокси для обхода CORS
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Структура
 
-## Deploy on Vercel
+```
+src/
+├── app/
+│   ├── page.tsx          # Главная страница
+│   └── api/proxy/        # API прокси
+├── components/ui/        # UI компоненты shadcn
+└── lib/
+    └── api.ts            # Функции для работы с API
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Функционал
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Подключение по токену
+2. Поиск клиента по телефону
+3. Выбор организации, счёта, склада, типа цены
+4. Поиск и добавление товаров в корзину
+5. Создание продажи / создание и проведение
+
+## Ссылка
+
+https://tablecrm-mobile-topaz.vercel.app/
