@@ -72,7 +72,7 @@ export default function Home() {
       setPriceTypes((types as any).results || types);
       setConnected(true);
     } catch (e) {
-      setError("Ошибка подключения. Проверьте токен.");
+      setError("Ошибка: " + (e instanceof Error ? e.message : "Проверьте токен"));
     } finally {
       setLoading(false);
     }

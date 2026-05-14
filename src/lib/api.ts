@@ -37,8 +37,28 @@ type ApiResponse<T> = {
 
 export async function fetchWarehouses(token: string) {
   const res = await fetch(`${API_BASE}/warehouses/?token=${token}`);
-  if (!res.ok) throw new Error('Failed to fetch warehouses');
-  return res.json() as Promise<ApiResponse<Warehouse>>;
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+export async function fetchPayboxes(token: string) {
+  const res = await fetch(`${API_BASE}/pboxes/meta?token=${token}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+export async function fetchPriceTypes(token: string) {
+  const res = await fetch(`${API_BASE}/price_types/?token=${token}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+export async function fetchNomenclature(token: string, search: string = '') {
+  const params = new URLSearchParams({ token });
+  if (search) params.append('name', search);
+  const res = await fetch(`${API_BASE}/nomenclature/?${params}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
 }
 
 export async function fetchPayboxes(token: string) {
@@ -49,8 +69,8 @@ export async function fetchPayboxes(token: string) {
 
 export async function fetchOrganizations(token: string) {
   const res = await fetch(`${API_BASE}/organizations/?token=${token}`);
-  if (!res.ok) throw new Error('Failed to fetch organizations');
-  return res.json() as Promise<ApiResponse<Organization>>;
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
 }
 
 export async function fetchPriceTypes(token: string) {
