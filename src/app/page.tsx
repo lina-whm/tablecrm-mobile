@@ -66,10 +66,11 @@ export default function Home() {
         fetchPayboxes(token),
         fetchPriceTypes(token),
       ]);
-      setOrganizations((orgs as any).results || orgs);
-      setWarehouses((wares as any).results || wares);
-      setAccounts((accs as any).results || accs);
-      setPriceTypes((types as any).results || types);
+      const toArray = (data: any) => Array.isArray(data) ? data : (data?.results || []);
+      setOrganizations(toArray(orgs));
+      setWarehouses(toArray(wares));
+      setAccounts(toArray(accs));
+      setPriceTypes(toArray(types));
       setConnected(true);
     } catch (e) {
       setError("Ошибка: " + (e instanceof Error ? e.message : "Проверьте токен"));
