@@ -92,7 +92,12 @@ export default function Home() {
     setSearchingClient(true);
     try {
       const data = await fetchContragents(token, phone);
-      const found = toArray(data);
+      const allClients = toArray(data);
+      const cleanPhone = phone.replace(/[^0-9]/g, '');
+      const found = allClients.filter((c: any) => {
+        const clientPhone = (c.phone || '').replace(/[^0-9]/g, '');
+        return clientPhone.includes(cleanPhone) || cleanPhone.includes(clientPhone);
+      });
       setClients(found);
       if (found.length === 1) setClient(found[0]);
       else if (found.length === 0) setClient(null);

@@ -11,7 +11,8 @@ function buildUrl(endpoint: string, token: string, params: Record<string, string
 }
 
 export async function fetchContragents(token: string, phone: string) {
-  const url = buildUrl('contragents/meta', token, { phone });
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const url = buildUrl('contragents/', token, { phone: cleanPhone });
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
