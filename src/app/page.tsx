@@ -377,6 +377,8 @@ export default function Home() {
                       </button>
                     );
                   })}
+                </div>
+              )}
             </CardContent>
           </Card>
 
