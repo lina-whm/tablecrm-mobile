@@ -25,7 +25,7 @@ export async function fetchWarehouses(token: string) {
 }
 
 export async function fetchPayboxes(token: string) {
-  const url = buildUrl('pboxes/meta', token);
+  const url = buildUrl('payboxes/', token);
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
