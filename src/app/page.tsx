@@ -125,14 +125,15 @@ export default function Home() {
     }
   }, [token, productSearch]);
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product: any) => {
+    const price = product.prices?.[0]?.price || product.price || 0;
     const existing = cart.find((item) => item.id === product.id);
     if (existing) {
       setCart(cart.map((item) =>
         item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
       ));
     } else {
-      setCart([...cart, { ...product, quantity: 1, price: product.price || 0 }]);
+      setCart([...cart, { ...product, quantity: 1, price }]);
     }
     setProducts([]);
     setProductSearch("");
@@ -358,23 +359,24 @@ export default function Home() {
                 />
                 <Button variant="outline" onClick={searchProducts}>Найти</Button>
               </div>
-              {productSearch && products.length === 0 && (
+              {productSearch && products.length === 0 && !loading && (
                 <p className="text-sm text-gray-500 text-center py-2">Товары не найдены</p>
               )}
               {products.length > 0 && (
                 <div className="border rounded-lg p-2 space-y-2 max-h-48 overflow-y-auto">
-                  {products.map((p) => (
-                    <button
-                      key={p.id}
-                      onClick={() => addToCart(p)}
-                      className="w-full text-left p-2 hover:bg-gray-100 rounded flex justify-between"
-                    >
-                      <span>{p.name}</span>
-                      {p.price && <span className="text-gray-500">{p.price} ₽</span>}
-                    </button>
-                  ))}
-                </div>
-              )}
+                  {products.map((p: any) => {
+                    const price = p.prices?.[0]?.price || 0;
+                    return (
+                      <button
+                        key={p.id}
+                        onClick={() => addToCart(p)}
+                        className="w-full text-left p-2 hover:bg-gray-100 rounded flex justify-between"
+                      >
+                        <span>{p.name}</span>
+                        {price > 0 && <span className="text-gray-500">{price} ₽</span>}
+                      </button>
+                    );
+                  })}
             </CardContent>
           </Card>
 
