@@ -62,7 +62,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const toArray = (data: any) => Array.isArray(data) ? data : (data?.results || []);
+  const toArray = (data: any) => Array.isArray(data) ? data : (data?.results || data?.result || []);
 
   const connect = async () => {
     if (!token.trim()) return;
@@ -101,7 +101,8 @@ export default function Home() {
       setClients(found);
       if (found.length === 1) setClient(found[0]);
       else if (found.length === 0) setClient(null);
-    } catch {
+    } catch (e) {
+      console.error('Search error:', e);
       setClient(null);
     } finally {
       setSearchingClient(false);
