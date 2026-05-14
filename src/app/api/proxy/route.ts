@@ -36,9 +36,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const { searchParams } = new URL(request.url);
-  const endpoint = searchParams.get('endpoint') || 'docs_sales/';
   const token = searchParams.get('token');
-  const pass = searchParams.get('pass');
 
   if (!token) {
     return NextResponse.json({ error: 'Missing token' }, { status: 400 });
@@ -46,7 +44,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const url = `${API_BASE}/${endpoint}?token=${token}${pass === '1' ? '&pass=1' : ''}`;
+    const url = `${API_BASE}/docs_sales/?token=${token}`;
 
     const res = await fetch(url, {
       method: 'POST',

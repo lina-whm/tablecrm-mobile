@@ -151,24 +151,30 @@ export default function Home() {
     setError("");
     setSuccess("");
 
-    const payload: OrderPayload = {
-      contragent_id: client?.id,
-      contragent_name: client?.name,
-      contragent_phone: phone,
-      organization_id: orgId,
-      warehouse_id: warehouseId,
-      pbox_id: accountId,
-      price_type_id: priceTypeId,
-      items: cart.map((item) => ({
-        nomenclature_id: item.id,
-        nomenclature_name: item.name,
-        quantity: item.quantity,
+    const payload = [{
+      priority: 0,
+      dated: Math.floor(Date.now() / 1000),
+      operation: "Заказ",
+      tax_included: true,
+      tax_active: true,
+      goods: cart.map((item) => ({
         price: item.price,
-        sum: item.price * item.quantity,
+        quantity: item.quantity,
+        unit: 116,
+        discount: 0,
+        sum_discounted: 0,
+        nomenclature: item.id,
       })),
-      is_passed: isPass,
+      settings: {},
+      warehouse: warehouseId,
+      contragent: client?.id || null,
+      paybox: accountId,
+      organization: orgId,
+      status: !isPass,
+      paid_rubles: total,
+      paid_lt: 0,
       comment,
-    };
+    }];
 
     try {
       await createSale(token, payload, isPass);

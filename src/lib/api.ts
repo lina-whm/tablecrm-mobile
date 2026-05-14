@@ -1,4 +1,4 @@
-const API_PROXY = '/api/tablecrm';
+const API_PROXY = '/api/proxy';
 
 function buildUrl(endpoint: string, token: string, params: Record<string, string> = {}) {
   const searchParams = new URLSearchParams();
@@ -56,9 +56,7 @@ export async function fetchNomenclature(token: string, search: string = '') {
 
 export async function createSale(token: string, payload: unknown, isPass: boolean) {
   const searchParams = new URLSearchParams();
-  searchParams.set('endpoint', 'docs_sales/');
   searchParams.set('token', token);
-  if (isPass) searchParams.set('pass', '1');
   const url = `${API_PROXY}?${searchParams.toString()}`;
   const res = await fetch(url, {
     method: 'POST',
